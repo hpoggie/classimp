@@ -16,12 +16,12 @@
       (cl:values new-version major minor)))
   (cl:defun %v= (req)
     (cl:ecase req
-      (:3.0-3.3 (cl:member *version* '(:3.0 :3.1 :3.2 :3.3 :4.0))) ;; exact versions
-      (:3.0+ (cl:member *version* '(:3.0 :3.1 :3.2 :3.3 :4.0)))
-      (:3.1+ (cl:member *version* '(:3.1 :3.2 :3.3 :4.0)))
-      (:3.2+ (cl:member *version* '(:3.2 :3.3 :4.0)))
-      (:3.3+ (cl:member *version* '(:3.3 :4.0)))
-      (:>3.3 (cl:member *version* '(:4.0))))))
+      (:3.0-3.3 (cl:member *version* '(:3.0 :3.1 :3.2 :3.3 :4.0 :4.1))) ;; exact versions
+      (:3.0+ (cl:member *version* '(:3.0 :3.1 :3.2 :3.3 :4.0 :4.1)))
+      (:3.1+ (cl:member *version* '(:3.1 :3.2 :3.3 :4.0 :4.1)))
+      (:3.2+ (cl:member *version* '(:3.2 :3.3 :4.0 :4.1)))
+      (:3.3+ (cl:member *version* '(:3.3 :4.0 :4.1)))
+      (:>3.3 (cl:member *version* '(:4.0 :4.1))))))
 
 (cl:eval-when (:compile-toplevel)
   (cl:setf *compiled* cl:t)
@@ -33,7 +33,7 @@
         (cl:unless (cl:or (cl:and (cl:= major 3)
                                   (cl:<= 0 minor 3))
                           (cl:and (cl:= major 4)
-                                  (cl:<= 0 minor 0)))
+                                  (cl:<= 0 minor 1)))
           (cl:error "trying to link against unsupported version of assimp. 3.0-3.3.x supported, got version ~a.~a"
                     major minor))
         (cl:setf *version* new-version)))))
@@ -46,7 +46,7 @@
         (cl:unless (cl:or (cl:and (cl:= major 3)
                                   (cl:<= 0 minor 3))
                           (cl:and (cl:= major 4)
-                                  (cl:<= 0 minor 0)))
+                                  (cl:<= 0 minor 1)))
           (cl:error "trying to link against unsupported version of assimp. 3.0-3.3.x supported, got version ~a.~a"
                     major minor))
         (cl:cond
